@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
     //MARK:- IBOutlet
     @IBOutlet var imagePickerView: UIImageView!
@@ -31,10 +31,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         super.viewDidLoad()
         
         
-        styleTextField(topTextField)
-        styleTextField(bottomTextField)
-        topTextField.text = "TOP"
-        bottomTextField.text = "BOTTOM"
+        styleTextField(topTextField, defaultText: "TOP")
+        styleTextField(bottomTextField, defaultText: "BOTTOM")
+    
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -49,10 +48,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     
-    func styleTextField(_ textField: UITextField){
+    func styleTextField(_ textField: UITextField, defaultText: String){
         textField.defaultTextAttributes = memeTextAttributes
         textField.textAlignment = .center
         textField.delegate = self
+        textField.text = defaultText
     }
     
     
@@ -98,8 +98,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func unsubscribeFromKeyboardNotifications(){
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self)
     }
     
     func generateMemedImage() -> UIImage {
@@ -157,14 +156,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBAction func shareButtonWasPressed(_ sender: Any) {
         let memeImage = generateMemedImage()
-        let ac = UIActivityViewController(activityItems: [memeImage], applicationActivities: nil)
-        ac.completionWithItemsHandler = {
+        let activityController = UIActivityViewController(activityItems: [memeImage], applicationActivities: nil)
+        activityController.completionWithItemsHandler = {
             activity, success, items, error in
             if success{
                 self.save()
             }
         }
-        present(ac, animated: true)
+        present(activityController, animated: true)
     }
     
  

@@ -41,5 +41,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>MeMe Would like to access your camera to take a nice photo.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>MeMe Would like to access your photo library to import your photo.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>MeMe Would like to access your photo library to Save your photo.</string>
 </dict>
 </plist>
